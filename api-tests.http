@@ -126,3 +126,78 @@ x-hasura-admin-secret: {{admin_secret}}
   "query": "mutation EliminarBodega($id: Int!) { delete_bodegas_by_pk(id: $id) { id } }",
   "variables": { "id": 9999 }
 }
+
+###
+###
+### Inventarios - 1) Listar (básico)
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "query ListarInventarios { inventarios(order_by: {id: asc}) { id productoID bodegaID } }"
+}
+
+###
+
+### Inventarios - 2) Listar (con relaciones si están trackeadas en Hasura)
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "query ListarInventariosConRelaciones { inventarios(order_by: {id: asc}) { id productoID bodegaID producto { id nombreProducto ean } bodega { id codigo nombreBodega } movimientos(order_by: {id: asc}) { id cantidad fecha } } }"
+}
+
+###
+
+### Inventarios - 3) Obtener por ID
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "query InventarioPorId($id: Int!) { inventarios_by_pk(id: $id) { id productoID bodegaID } }",
+  "variables": { "id": 1 }
+}
+
+###
+
+### Inventarios - 4) Crear
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "mutation CrearInventario($obj: inventarios_insert_input!) { insert_inventarios_one(object: $obj) { id productoID bodegaID } }",
+  "variables": {
+    "obj": { "productoID": 1, "bodegaID": 2 }
+  }
+}
+
+###
+
+### Inventarios - 5) Actualizar
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "mutation ActualizarInventario($id: Int!, $set: inventarios_set_input!) { update_inventarios_by_pk(pk_columns: {id: $id}, _set: $set) { id productoID bodegaID } }",
+  "variables": {
+    "id": 1,
+    "set": { "bodegaID": 1 }
+  }
+}
+
+###
+
+### Inventarios - 6) Eliminar
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "mutation EliminarInventario($id: Int!) { delete_inventarios_by_pk(id: $id) { id } }",
+  "variables": { "id": 9999 }
+}
