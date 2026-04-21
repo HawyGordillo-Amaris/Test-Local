@@ -96,3 +96,55 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+# #########################################################
+
+## API de Gestión de Inventario (Backend Serverless)
+
+Explicacion sobre arquitectura con Base de datos 
+
+## Base de Datos 
+Motor de Base de Datos: PostgreSQL 15.
+
+Uso de Neon.tech https://neon.tech/ (PostgreSQL Serverless). 
+
+## Motor de API (Microservicio): Hasura GraphQL Engine https://hasura.io/. 
+
+Se utilizó Hasura (herramienta permitida en el requerimiento) para conectar directamente con PostgreSQL y generar una API GraphQL de alto rendimiento en tiempo real, garantizando seguridad y eliminando el código repetitivo (boilerplate) de un CRUD tradicional en Node.js.
+
+## Reglas de Negocio Implementadas (Integridad Referencial)
+
+El esquema de base de datos `database/schema.sql` protege la integridad de los datos a nivel de motor:
+
+1. Unicidad de EAN y Códigos:** No se permiten productos con EAN duplicados ni bodegas con códigos repetidos (`UNIQUE`).
+
+2. Prevención de Duplicidad en Inventario:** Un mismo producto no puede registrarse dos veces en la misma bodega Índice Compuesto `UNIQUE("productoID", "bodegaID")`.
+
+3. Protección de Eliminación:** No se puede eliminar una bodega o producto si tiene inventario asociado `ON DELETE RESTRICT`.
+
+## Endpoint y Consumo de la API
+
+La API está desplegada en producción y lista para ser consumida por el Frontend vía GraphQL.
+
+## GraphQL Endpoint: (https://steady-shrimp-32.hasura.app/v1/graphql)
+
+* Método: POST
+
+## Ejemplo de Consulta (Query) - Obtener Inventario y Movimientos:
+`graphql
+query ObtenerInventarioCompleto {
+  inventarios {
+    id
+    producto {
+      nombreProducto
+      ean
+    }
+    bodega {
+      nombreBodega
+    }
+    movimientos {
+      cantidad
+      fecha
+    }
+  }
+}
