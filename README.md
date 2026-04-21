@@ -152,3 +152,15 @@ query ObtenerInventarioCompleto {
 ## Se incluye un archivo api-tests.http 
 
 En la raíz del proyecto se crean los payloads de GraphQL listos para ser ejecutados, y un script database/seed.sql con datos iniciales para facilitar las pruebas.
+
+## Uso con Hasura (recomendado para esta prueba)
+
+Este repositorio se está alineando para que el CRUD se consuma desde Hasura (GraphQL) apuntando a Neon.
+
+- Endpoint Hasura: `https://steady-shrimp-32.hasura.app/v1/graphql`
+- Ejemplos listos para ejecutar: `api-tests.http` (sección Productos)
+
+
+## Como Correr el Proyecto 
+Start Projecto
+  npm run start:dev 
