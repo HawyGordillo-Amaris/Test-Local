@@ -148,3 +148,7 @@ query ObtenerInventarioCompleto {
     }
   }
 }
+
+## Se incluye un archivo api-tests.http 
+
+En la raíz del proyecto se crean los payloads de GraphQL listos para ser ejecutados, y un script database/seed.sql con datos iniciales para facilitar las pruebas.
