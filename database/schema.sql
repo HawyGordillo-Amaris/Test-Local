@@ -1,0 +1,25 @@
+CREATE TABLE productos (
+  id SERIAL PRIMARY KEY,
+  "nombreProducto" VARCHAR(100) NOT NULL,
+  ean VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE bodegas (
+  id SERIAL PRIMARY KEY,
+  codigo VARCHAR(20) UNIQUE NOT NULL,
+  "nombreBodega" VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE inventarios (
+  id SERIAL PRIMARY KEY,
+  "productoID" INTEGER NOT NULL REFERENCES productos(id) ON DELETE RESTRICT,
+  "bodegaID" INTEGER NOT NULL REFERENCES bodegas(id) ON DELETE RESTRICT,
+  UNIQUE ("productoID", "bodegaID")
+);
+
+CREATE TABLE movimientos (
+  id SERIAL PRIMARY KEY,
+  "inventarioID" INTEGER NOT NULL REFERENCES inventarios(id) ON DELETE RESTRICT,
+  fecha TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+  cantidad INTEGER NOT NULL
+);

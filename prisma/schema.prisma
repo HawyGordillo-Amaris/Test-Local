@@ -4,10 +4,55 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Producto {
+  id             Int          @id @default(autoincrement())
+  nombreProducto String       @db.VarChar(100)
+  ean            String       @unique @db.VarChar(50)
+  
+  inventarios    Inventario[]
+
+  @@map("productos")
+}
+
+model Bodega {
+  id           Int          @id @default(autoincrement())
+  codigo       String       @unique @db.VarChar(20)
+  nombreBodega String       @db.VarChar(100)
+
+  inventarios  Inventario[]
+
+  @@map("bodegas")
+}
+
+model Inventario {
+  id         Int          @id @default(autoincrement())
+  productoID Int
+  bodegaID   Int
+
+  producto   Producto     @relation(fields: [productoID], references: [id], onDelete: Restrict)
+  bodega     Bodega       @relation(fields: [bodegaID], references: [id], onDelete: Restrict)
+  movimientos Movimiento[]
+
+  // Regla de negocio: Un mismo producto no puede estar registrado dos veces en la misma bodega
+  @@unique([productoID, bodegaID])
+  @@map("inventarios")
+}
+
+model Movimiento {
+  id           Int        @id @default(autoincrement())
+  inventarioID Int
+  fecha        DateTime   @default(now())
+  cantidad     Int
+
+  inventario   Inventario @relation(fields: [inventarioID], references: [id], onDelete: Restrict)
+
+  @@map("movimientos")
 }
