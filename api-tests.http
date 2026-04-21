@@ -1,5 +1,5 @@
 @api = https://steady-shrimp-32.hasura.app/v1/graphql
-@admin_secret = x3L3ZnM5DD4K4ahp2Qd2ylKNc6Soph7HMPXvEsTyOGNrOI5lzakorVHr0ghBRgRy
+@admin_secret = 
 
 ### Productos - 1) Listar
 POST {{api}}
@@ -60,5 +60,69 @@ x-hasura-admin-secret: {{admin_secret}}
 
 {
   "query": "mutation EliminarProducto($id: Int!) { delete_productos_by_pk(id: $id) { id } }",
+  "variables": { "id": 9999 }
+}
+
+###
+###
+### Bodegas - 1) Listar
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "query ListarBodegas { bodegas(order_by: {id: asc}) { id codigo nombreBodega } }"
+}
+
+###
+
+### Bodegas - 2) Obtener por ID
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "query BodegaPorId($id: Int!) { bodegas_by_pk(id: $id) { id codigo nombreBodega } }",
+  "variables": { "id": 1 }
+}
+
+###
+
+### Bodegas - 3) Crear
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "mutation CrearBodega($obj: bodegas_insert_input!) { insert_bodegas_one(object: $obj) { id codigo nombreBodega } }",
+  "variables": {
+    "obj": { "codigo": "BOD-03", "nombreBodega": "Bodega Prueba Cali" }
+  }
+}
+
+###
+
+### Bodegas - 4) Actualizar
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "mutation ActualizarBodega($id: Int!, $set: bodegas_set_input!) { update_bodegas_by_pk(pk_columns: {id: $id}, _set: $set) { id codigo nombreBodega } }",
+  "variables": {
+    "id": 1,
+    "set": { "nombreBodega": "Bodega Prueba Bogotá (Editado)" }
+  }
+}
+
+###
+
+### Bodegas - 5) Eliminar
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "mutation EliminarBodega($id: Int!) { delete_bodegas_by_pk(id: $id) { id } }",
   "variables": { "id": 9999 }
 }
