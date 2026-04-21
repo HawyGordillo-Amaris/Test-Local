@@ -158,8 +158,8 @@ En la raíz del proyecto se crean los payloads de GraphQL listos para ser ejecut
 Este repositorio se está alineando para que el CRUD se consuma desde Hasura (GraphQL) apuntando a Neon.
 
 - Endpoint Hasura: `https://steady-shrimp-32.hasura.app/v1/graphql`
-- Ejemplos listos para ejecutar: `api-tests.http` (secciones Productos, Bodegas e Inventarios)
-- Curls: `doc/Curl-Modulo-Productos.md`, `doc/Curl-Modulo-Bodegas.md`, `doc/Curl-Modulo-Inventarios.md` (reemplaza `<HASURA_ADMIN_SECRET>`)
+- Ejemplos listos para ejecutar: `api-tests.http` (secciones Productos, Bodegas, Inventarios y Movimientos)
+- Curls: `doc/Curl-Modulo-Productos.md`, `doc/Curl-Modulo-Bodegas.md`, `doc/Curl-Modulo-Inventarios.md`, `doc/Curl-Modulo-Movimientos.md` (reemplaza `<HASURA_ADMIN_SECRET>`)
 
 
 ## Como Correr el Proyecto 
