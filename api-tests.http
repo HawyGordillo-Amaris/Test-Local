@@ -276,3 +276,41 @@ x-hasura-admin-secret: {{admin_secret}}
   "query": "mutation EliminarMovimiento($id: Int!) { delete_movimientos_by_pk(id: $id) { id } }",
   "variables": { "id": 9999 }
 }
+
+###
+###
+### Consultas de negocio - 1) Inventario completo por Bodega (con stock calculado por suma de movimientos)
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "query InventarioPorBodega($bodegaId: Int!) { bodegas_by_pk(id: $bodegaId) { id codigo nombreBodega inventarios(order_by: {id: asc}) { id producto { id nombreProducto ean } movimientos_aggregate { aggregate { sum { cantidad } } } } } }",
+  "variables": { "bodegaId": 1 }
+}
+
+###
+
+### Consultas de negocio - 2) Stock por Inventario (suma de movimientos)
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "query StockPorInventario { inventarios(order_by: {id: asc}) { id productoID bodegaID movimientos_aggregate { aggregate { sum { cantidad } } } } }"
+}
+
+###
+
+### Consultas de negocio - 3) Movimientos por rango de fechas
+POST {{api}}
+Content-Type: application/json
+x-hasura-admin-secret: {{admin_secret}}
+
+{
+  "query": "query MovimientosPorFecha($from: timestamptz!, $to: timestamptz!) { movimientos(where: {fecha: {_gte: $from, _lte: $to}}, order_by: {fecha: asc}) { id inventarioID fecha cantidad } }",
+  "variables": {
+    "from": "2026-01-01T00:00:00Z",
+    "to": "2026-12-31T23:59:59Z"
+  }
+}

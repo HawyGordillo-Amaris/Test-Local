@@ -160,6 +160,7 @@ Este repositorio se está alineando para que el CRUD se consuma desde Hasura (Gr
 - Endpoint Hasura: `https://steady-shrimp-32.hasura.app/v1/graphql`
 - Ejemplos listos para ejecutar: `api-tests.http` (secciones Productos, Bodegas, Inventarios y Movimientos)
 - Curls: `doc/Curl-Modulo-Productos.md`, `doc/Curl-Modulo-Bodegas.md`, `doc/Curl-Modulo-Inventarios.md`, `doc/Curl-Modulo-Movimientos.md` (reemplaza `<HASURA_ADMIN_SECRET>`)
+- Variables y buenas prácticas (no commitear secretos): `doc/Variables-Hasura.md`
 
 
 ## Como Correr el Proyecto 
