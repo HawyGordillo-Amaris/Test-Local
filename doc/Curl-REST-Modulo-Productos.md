@@ -6,11 +6,10 @@ usando `HASURA_URL` y `HASURA_ADMIN_SECRET` desde el `.env`.
 
 ## Paso 1
 
-> Asegúrate de tener el servicio corriendo:
+> Para tener el servicio corriendo:
 > - `npm run start:dev`
 
 ### Base URL
-
 - `http://localhost:3000`
 
 ### 1) Listar productos
