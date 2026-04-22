@@ -1,7 +1,7 @@
 ## REST - Módulo Productos 
 
 Estos `curl` consumen la API REST del microservicio Nest en `http://localhost:3000`.
-Internamente el servicio llama a Hasura (GraphQL) 
+Internamente el servicio llama a Hasura para GraphQL 
 usando `HASURA_URL` y `HASURA_ADMIN_SECRET` desde el `.env`.
 
 ## Paso 1
